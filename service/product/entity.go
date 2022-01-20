@@ -11,10 +11,26 @@ type Product struct {
 	Description string `gorm:"type:text;not null"`
 	Ingredient  string `gorm:"type:text;not null"`
 	Price       uint
-	Rate        float32 `gorm:"size:255;not null"`
-	Type        string  `gorm:"size:255;not null"`
-	Image       string  `gorm:"size:255;not null"`
+	Stock       uint
+	Rate        float32
+	Image       string `gorm:"size:255;not null"`
+	IsActive    bool
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt
+	Promotion   ProductPromotion
+}
+
+type ProductPromotion struct {
+	Id                 int `gorm:"not null;uniqueIndex;primary_key"`
+	ProductId          int
+	Type               string
+	IsActive           bool
+	Price              uint
+	PriceAfterDiscount uint
+	Stock              uint
+	TotalSold          uint
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
+	DeletedAt          gorm.DeletedAt
 }

@@ -1,5 +1,7 @@
 package helper
 
+import "encoding/json"
+
 type Meta struct {
 	Message string `json:"message"`
 	Code    int    `json:"code"`
@@ -20,4 +22,10 @@ func ApiResponse(message string, code int, status string, data interface{}) Resp
 			Status:  status,
 		},
 	}
+}
+
+func ConvertDataToJsonString(data interface{}) string {
+	jsonByte, err := json.Marshal(data)
+	PanicIfError(err)
+	return string(jsonByte)
 }

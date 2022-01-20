@@ -30,6 +30,7 @@ func NewDB(config Config) *gorm.DB {
 
 	db.AutoMigrate(&user.User{})
 	db.AutoMigrate(&product.Product{})
+	db.AutoMigrate(&product.ProductPromotion{})
 	db.AutoMigrate(&order.Order{})
 	db.AutoMigrate(&order.OrderHistory{})
 	db.AutoMigrate(&order.OrderProduct{})
