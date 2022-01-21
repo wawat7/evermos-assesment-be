@@ -15,6 +15,7 @@ func NewController(service Service) *orderController {
 	return &orderController{service: service}
 }
 
+// Route is function to define any route order
 func (controller *orderController) Route(app *gin.Engine, handler gin.HandlerFunc) {
 	route := app.Group("api/orders")
 	route.GET("/", handler, controller.Get)
@@ -22,6 +23,7 @@ func (controller *orderController) Route(app *gin.Engine, handler gin.HandlerFun
 	route.POST("/", handler, controller.Create)
 }
 
+// Get is function to get all data order
 func (controller *orderController) Get(c *gin.Context) {
 	txHandle := c.MustGet("db_trx").(*gorm.DB)
 
@@ -31,6 +33,7 @@ func (controller *orderController) Get(c *gin.Context) {
 	return
 }
 
+// Create is function to create order
 func (controller *orderController) Create(c *gin.Context) {
 	var input CreateOrderRequest
 
@@ -48,6 +51,7 @@ func (controller *orderController) Create(c *gin.Context) {
 	return
 }
 
+// FindById is function to get detail order
 func (controller *orderController) FindById(c *gin.Context) {
 	var inputParam DetailOrderRequest
 	err := c.ShouldBindUri(&inputParam)

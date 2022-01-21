@@ -19,6 +19,7 @@ import (
 	"time"
 )
 
+// setupDB is function for setting connection to database for testing
 func setupDB() *gorm.DB {
 	const DB_USERNAME = "root"
 	const DB_PASSWORD = "root"
@@ -45,6 +46,7 @@ func setupDB() *gorm.DB {
 	return db
 }
 
+// setupRouter is function to set up router for testing
 func setupRouter(db *gorm.DB) (*gin.Engine, user.User, product.Product) {
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
@@ -66,6 +68,7 @@ func setupRouter(db *gorm.DB) (*gin.Engine, user.User, product.Product) {
 	return router, user, product
 }
 
+// TestOrderCreate is function to test order create success and failed
 func TestOrderCreate(t *testing.T) {
 	db := setupDB()
 
@@ -84,6 +87,7 @@ func TestOrderCreate(t *testing.T) {
 
 }
 
+// CreateOrderSuccess is function for test create order success with http test and the result must success
 func CreateOrderSuccess(t *testing.T, router *gin.Engine, number int, userData user.User, productData product.Product) {
 	fmt.Println("-------------")
 	fmt.Println("-------------")
@@ -100,6 +104,7 @@ func CreateOrderSuccess(t *testing.T, router *gin.Engine, number int, userData u
 
 }
 
+// CreateOrderFailed is function for test create order failed with http test and the result must failed
 func CreateOrderFailed(t *testing.T, router *gin.Engine, number int, userData user.User, productData product.Product) {
 	fmt.Println("-------------")
 	fmt.Println("-------------")
@@ -116,6 +121,7 @@ func CreateOrderFailed(t *testing.T, router *gin.Engine, number int, userData us
 
 }
 
+// DeleteAllData is function for delete any data product, order, and user
 func DeleteAllData(orderService order.Service, productService product.Service, userService user.Service) {
 	orders := orderService.FindAll()
 	for _, orderData := range orders {
@@ -133,6 +139,7 @@ func DeleteAllData(orderService order.Service, productService product.Service, u
 	}
 }
 
+// InsertDataUserAndProduct is function for insert data user and product for testing
 func InsertDataUserAndProduct(productService product.Service, userService user.Service) (user.User, product.Product) {
 	user := user.User{
 		Name:      "Example User",

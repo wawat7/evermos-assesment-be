@@ -15,13 +15,15 @@ func NewController(service Service) *userController {
 	return &userController{service: service}
 }
 
+// Route is function to define any route user
 func (controller *userController) Route(app *gin.Engine) {
 	route := app.Group("api/users")
 	route.GET("/", controller.Get)
 	route.POST("/", controller.Save)
-	route.GET("/:id", controller.findById)
+	route.GET("/:id", controller.FindById)
 }
 
+// Get is function to get all data user
 func (controller *userController) Get(c *gin.Context) {
 	users := controller.service.FindAll()
 
@@ -29,6 +31,7 @@ func (controller *userController) Get(c *gin.Context) {
 	return
 }
 
+// Save is function create data user
 func (controller *userController) Save(c *gin.Context) {
 	var input CreateUserRequest
 	err := c.ShouldBindJSON(&input)
@@ -51,7 +54,8 @@ func (controller *userController) Save(c *gin.Context) {
 	return
 }
 
-func (controller *userController) findById(c *gin.Context) {
+// FindById is function for get data detail user
+func (controller *userController) FindById(c *gin.Context) {
 	var inputParam DetailUserRequest
 	err := c.ShouldBindUri(&inputParam)
 	helper.PanicIfError(err)

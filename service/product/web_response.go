@@ -23,6 +23,7 @@ type FormatProduct struct {
 	UpdatedAt     time.Time `json:"updated_at"`
 }
 
+// ProductFormat is function for mapping format data product before send
 func ProductFormat(product Product) FormatProduct {
 	ingredients := []string{}
 	err := json.Unmarshal([]byte(product.Ingredient), &ingredients)
@@ -59,6 +60,7 @@ func ProductFormat(product Product) FormatProduct {
 	}
 }
 
+// ProductsFormat is function for mapping format data product more than 1 before send
 func ProductsFormat(products []Product) []FormatProduct {
 	formats := []FormatProduct{}
 

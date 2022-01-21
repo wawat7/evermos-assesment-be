@@ -13,6 +13,7 @@ type FormatUser struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+// UserFormat is function for mapping data user before send
 func UserFormat(user User) FormatUser {
 	return FormatUser{
 		ID:        user.Id,
@@ -26,6 +27,7 @@ func UserFormat(user User) FormatUser {
 	}
 }
 
+// UsersFormat is function for mapping data user more than 1 before send
 func UsersFormat(users []User) []FormatUser {
 	formats := []FormatUser{}
 

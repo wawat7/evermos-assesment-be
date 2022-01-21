@@ -20,6 +20,7 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
+// Create is function to create data user
 func (r *repository) Create(user User) User {
 	err := r.db.Create(&user).Error
 	helper.PanicIfError(err)
@@ -27,6 +28,7 @@ func (r *repository) Create(user User) User {
 	return user
 }
 
+// FindAll is function for get all data user
 func (r *repository) FindAll() (users []User) {
 	err := r.db.Find(&users).Error
 	helper.PanicIfError(err)
@@ -34,6 +36,7 @@ func (r *repository) FindAll() (users []User) {
 	return
 }
 
+// FindById is function for get detail data user
 func (r *repository) FindById(Id int) (user User) {
 	err := r.db.Where("id = ?", Id).Find(&user).Error
 	helper.PanicIfError(err)
@@ -41,6 +44,7 @@ func (r *repository) FindById(Id int) (user User) {
 	return
 }
 
+// Delete is function for delete data user
 func (r *repository) Delete(user User) {
 	err := r.db.Delete(&user).Error
 	helper.PanicIfError(err)

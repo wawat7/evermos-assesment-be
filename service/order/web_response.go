@@ -41,6 +41,7 @@ type FormatOrderHistory struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+// OrderProductFormat is function for mapping format data order product before send
 func OrderProductFormat(orderProduct OrderProduct) FormatOrderProduct {
 	var productData product.Product
 	err := json.Unmarshal([]byte(orderProduct.ProductInfo), &productData)
@@ -67,6 +68,7 @@ func OrderProductFormat(orderProduct OrderProduct) FormatOrderProduct {
 	return format
 }
 
+// OrderProductsFromat is function for mapping format data order product more than 1 before send
 func OrderProductsFromat(orderProducts []OrderProduct) []FormatOrderProduct {
 	formats := []FormatOrderProduct{}
 
@@ -78,6 +80,7 @@ func OrderProductsFromat(orderProducts []OrderProduct) []FormatOrderProduct {
 	return formats
 }
 
+// OrderHistoryFormat is function for mapping format data order history before send
 func OrderHistoryFormat(history OrderHistory) FormatOrderHistory {
 	return FormatOrderHistory{
 		Status:    history.Status,
@@ -86,6 +89,7 @@ func OrderHistoryFormat(history OrderHistory) FormatOrderHistory {
 	}
 }
 
+// OrderHistoriesFormat is function for mapping format data history more than 1 before send
 func OrderHistoriesFormat(histories []OrderHistory) []FormatOrderHistory {
 	formats := []FormatOrderHistory{}
 
@@ -97,6 +101,7 @@ func OrderHistoriesFormat(histories []OrderHistory) []FormatOrderHistory {
 	return formats
 }
 
+// OrderFormat is function to mapping format data order before send
 func OrderFormat(order Order) FormatOrder {
 	return FormatOrder{
 		Id:          order.Id,
@@ -111,6 +116,7 @@ func OrderFormat(order Order) FormatOrder {
 	}
 }
 
+// OrdersFormat is function to mapping format data order more than 1 before send
 func OrdersFormat(orders []Order) []FormatOrder {
 	formats := []FormatOrder{}
 

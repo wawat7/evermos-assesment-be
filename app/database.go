@@ -10,6 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// NewDB is function connect to database and migration table
 func NewDB(config Config) *gorm.DB {
 
 	DB_USERNAME := config.Get("DB_USERNAME")

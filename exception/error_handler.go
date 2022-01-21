@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// ErrorHandler is function for handle error validation or type Error()
 func ErrorHandler(c *gin.Context, recovered interface{}) {
 
 	if err, ok := recovered.(validator.ValidationErrors); ok {

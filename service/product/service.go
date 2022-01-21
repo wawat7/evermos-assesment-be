@@ -25,6 +25,7 @@ func NewService(repository Repository) *service {
 	return &service{repository: repository}
 }
 
+// Save is function to create data product with promotion if product promotion
 func (s *service) Save(input CreateProductRequest) Product {
 
 	ingredients := helper.ConvertDataToJsonString(input.Ingredient)
@@ -50,11 +51,13 @@ func (s *service) Save(input CreateProductRequest) Product {
 	return product
 }
 
+// FindAll is function to get all data products
 func (s *service) FindAll() (products []Product) {
 	products = s.repository.FindAll()
 	return
 }
 
+// FindById is function to get data detail product
 func (s *service) FindById(Id int) (product Product, err error) {
 	product = s.repository.FindById(Id)
 	if product.Id == 0 {
@@ -63,6 +66,7 @@ func (s *service) FindById(Id int) (product Product, err error) {
 	return
 }
 
+// GetPriceProduct is function to get price product
 func (s *service) GetPriceProduct(product Product) uint {
 	price := product.Price
 	if product.Promotion.Id != 0 {
@@ -71,11 +75,13 @@ func (s *service) GetPriceProduct(product Product) uint {
 	return price
 }
 
+// Update is function to update data product
 func (s *service) Update(product Product) Product {
 	product = s.repository.Update(product)
 	return product
 }
 
+// CreatePromotion is function to create data product promotion
 func (s *service) CreatePromotion(product Product, input CreateProductRequest) ProductPromotion {
 	promotion := ProductPromotion{
 		ProductId:          product.Id,
@@ -93,11 +99,13 @@ func (s *service) CreatePromotion(product Product, input CreateProductRequest) P
 	return promotion
 }
 
+// UpdatePromotion is function to update data product promotion
 func (s *service) UpdatePromotion(promotion ProductPromotion) ProductPromotion {
 	promotion = s.repository.UpdatePromotion(promotion)
 	return promotion
 }
 
+// Delete is function to delete data product
 func (s *service) Delete(product Product) {
 	s.repository.Delete(product)
 

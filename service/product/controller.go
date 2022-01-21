@@ -14,6 +14,7 @@ func NewController(service Service) *productController {
 	return &productController{service: service}
 }
 
+// Route is function for define any route product
 func (controller *productController) Route(app *gin.Engine) {
 	route := app.Group("api/products")
 	route.GET("/", controller.Get)
@@ -21,6 +22,7 @@ func (controller *productController) Route(app *gin.Engine) {
 	route.POST("/", controller.Create)
 }
 
+// Get is function to get all data product
 func (controller *productController) Get(c *gin.Context) {
 	products := controller.service.FindAll()
 
@@ -28,6 +30,7 @@ func (controller *productController) Get(c *gin.Context) {
 	return
 }
 
+// Create is function to create product
 func (controller *productController) Create(c *gin.Context) {
 	var input CreateProductRequest
 	err := c.ShouldBind(&input)
@@ -39,6 +42,7 @@ func (controller *productController) Create(c *gin.Context) {
 	return
 }
 
+// FindById is function to get detail product
 func (controller *productController) FindById(c *gin.Context) {
 	var inputParam DetailProductRequest
 	err := c.ShouldBindUri(&inputParam)

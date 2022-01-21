@@ -13,6 +13,7 @@ type Response struct {
 	Meta Meta        `json:"meta"`
 }
 
+// ApiResponse is function format return response
 func ApiResponse(message string, code int, status string, data interface{}) Response {
 	return Response{
 		Data: data,
@@ -24,6 +25,7 @@ func ApiResponse(message string, code int, status string, data interface{}) Resp
 	}
 }
 
+// ConvertDataToJsonString is function for convert from data interface to string JSON
 func ConvertDataToJsonString(data interface{}) string {
 	jsonByte, err := json.Marshal(data)
 	PanicIfError(err)

@@ -34,11 +34,14 @@ func NewService(repository Repository, serviceUser user.Service, serviceProduct 
 	return &service{repository: repository, serviceUser: serviceUser, serviceProduct: serviceProduct}
 }
 
+// WithTrx is function for connection database with transaction
 func (s *service) WithTrx(trxHandle *gorm.DB) *service {
 	s.repository = s.repository.WithTrx(trxHandle)
 	return s
 }
 
+// Save is function for create data order, order product and order history
+// and update data stock product for decrease stock and increase total sold product
 func (s *service) Save(input CreateOrderRequest) (Order, error) {
 	var order Order
 
@@ -79,11 +82,13 @@ func (s *service) Save(input CreateOrderRequest) (Order, error) {
 	return order, nil
 }
 
+// FindAll is function get all data orders
 func (s *service) FindAll() (orders []Order) {
 	orders = s.repository.FindAll()
 	return
 }
 
+// FindById is function to get data detail order
 func (s *service) FindById(Id int) (order Order, err error) {
 	order = s.repository.FindById(Id)
 	if order.Id == 0 {
@@ -92,6 +97,7 @@ func (s *service) FindById(Id int) (order Order, err error) {
 	return order, nil
 }
 
+// CreateOrderProduct is function to create data order product
 func (s *service) CreateOrderProduct(order Order, productData product.Product, quantity int) OrderProduct {
 	productJson := helper.ConvertDataToJsonString(productData)
 	subTotal := int(s.serviceProduct.GetPriceProduct(productData)) * quantity
@@ -109,6 +115,7 @@ func (s *service) CreateOrderProduct(order Order, productData product.Product, q
 	return orderProduct
 }
 
+// CreateOrderHistory is function to create data order history
 func (s *service) CreateOrderHistory(order Order, userData user.User) OrderHistory {
 	history := OrderHistory{
 		OrderId:   order.Id,
@@ -121,6 +128,7 @@ func (s *service) CreateOrderHistory(order Order, userData user.User) OrderHisto
 	return history
 }
 
+// CalculateTotal is function for calculate total price order
 func (s *service) CalculateTotal(product product.Product, quantity int) uint {
 	var total uint
 
@@ -128,6 +136,7 @@ func (s *service) CalculateTotal(product product.Product, quantity int) uint {
 	return total
 }
 
+// UpdateStockAndTotalSoldProduct is function for update data stock and total sold product
 func (s *service) UpdateStockAndTotalSoldProduct(product product.Product, quantity int) {
 	product = DecreaseStockProduct(product, quantity)
 	product = IncreaseTotalSoldProduct(product, quantity)
@@ -138,6 +147,7 @@ func (s *service) UpdateStockAndTotalSoldProduct(product product.Product, quanti
 	}
 }
 
+// ValidationStockProduct is function for validation stock product when order created
 func (s *service) ValidationStockProduct(productData product.Product, quantity int) bool {
 
 	productStock := productData.Stock
@@ -154,12 +164,14 @@ func (s *service) ValidationStockProduct(productData product.Product, quantity i
 
 }
 
+// Delete is function to delete data order
 func (s *service) Delete(order Order) {
 	s.repository.Delete(order)
 
 	return
 }
 
+// DecreaseStockProduct is function for decreate stock product when order created
 func DecreaseStockProduct(product product.Product, quantity int) product.Product {
 
 	if product.Promotion.Id != 0 {
@@ -171,6 +183,7 @@ func DecreaseStockProduct(product product.Product, quantity int) product.Product
 	return product
 }
 
+// IncreaseTotalSoldProduct is function for increase total sold product
 func IncreaseTotalSoldProduct(product product.Product, quantity int) product.Product {
 
 	if product.Promotion.Id != 0 {
