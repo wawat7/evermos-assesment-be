@@ -1,0 +1,579 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Evermos Assessment API",
+    "description": "API Spec for Evermos Assessment API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "User API"
+        ],
+        "description": "List all Users",
+        "summary": "List all Users",
+        "responses": {
+          "200": {
+            "description": "Success get all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["User API"],
+        "description": "Create new User",
+        "summary": "Create new User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success Create User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "message" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}" : {
+      "get" : {
+        "tags": ["User API"],
+        "summary": "Get user by Id",
+        "description": "Get user by id",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success get user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "message" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Product API"
+        ],
+        "description": "List all Products",
+        "summary": "List all Products",
+        "responses": {
+          "200": {
+            "description": "Success get all products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Product"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Product API"],
+        "description": "Create new Product",
+        "summary": "Create new Product",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProduct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success Create Product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "message" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{product_id}" : {
+      "get" : {
+        "tags": ["Product API"],
+        "summary": "Get product by Id",
+        "description": "Get product by id",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "Product Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success get product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "message" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": [
+          "Order API"
+        ],
+        "description": "List all Orders",
+        "summary": "List all Orders",
+        "responses": {
+          "200": {
+            "description": "Success get all orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Order"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Order API"],
+        "description": "Create new Order",
+        "summary": "Create new Order",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success Create Order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "message" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Order"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{order_id}" : {
+      "get" : {
+        "tags": ["Order API"],
+        "summary": "Get order by Id",
+        "description": "Get order by id",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "description": "Order Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success get order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "message" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Order"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateUser" : {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateProduct" : {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ingredient": {
+            "type": "array",
+            "items": {
+              "example": null
+            }
+          },
+          "price": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "stock": {
+            "type": "number"
+          },
+          "stock_promotion": {
+            "type": "number"
+          },
+          "price_after_discount": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateOrder" : {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "number"
+          },
+          "product_id": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        }
+      },
+      "User" : {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Product" : {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": [{
+              "example": null
+            }]
+          },
+          "type": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "original_price": {
+            "type": "number"
+          },
+          "stock": {
+            "type": "number"
+          },
+          "rate": {
+            "type": "number"
+          },
+          "image": {
+            "type": "string"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "total_sold": {
+            "type": "number"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+      "Order" : {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "code": {
+            "type": "string"
+          },
+          "total": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "number"
+          },
+          "updated_at": {
+            "type": "number"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "histories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/History"
+            }
+          }
+        }
+      },
+      "History" : {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "create_by": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
