@@ -8,6 +8,7 @@ type Service interface {
 	Save(user User) User
 	FindAll() (users []User)
 	FindById(Id int) (user User, err error)
+	Delete(user User)
 }
 
 type service struct {
@@ -34,4 +35,10 @@ func (s *service) FindById(Id int) (user User, err error) {
 		return user, errors.New("user not found")
 	}
 	return user, nil
+}
+
+func (s *service) Delete(user User) {
+	s.repository.Delete(user)
+
+	return
 }

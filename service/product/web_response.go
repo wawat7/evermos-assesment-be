@@ -14,7 +14,7 @@ type FormatProduct struct {
 	Type          string    `json:"type"`
 	Price         uint      `json:"price"`
 	OriginalPrice uint      `json:"original_price"`
-	Stock         uint      `json:"stock"`
+	Stock         int       `json:"stock"`
 	Rate          float32   `json:"rate"`
 	Image         string    `json:"image"`
 	IsActive      bool      `json:"is_active"`

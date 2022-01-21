@@ -14,6 +14,7 @@ type Service interface {
 	GetPriceProduct(product Product) uint
 	CreatePromotion(product Product, input CreateProductRequest) ProductPromotion
 	UpdatePromotion(promotion ProductPromotion) ProductPromotion
+	Delete(product Product)
 }
 
 type service struct {
@@ -32,7 +33,7 @@ func (s *service) Save(input CreateProductRequest) Product {
 		Description: input.Description,
 		Ingredient:  ingredients,
 		Price:       input.Price,
-		Stock:       input.Stock,
+		Stock:       int(input.Stock),
 		TotalSold:   0,
 		Rate:        0,
 		Image:       input.Image,
@@ -82,7 +83,7 @@ func (s *service) CreatePromotion(product Product, input CreateProductRequest) P
 		IsActive:           true,
 		Price:              product.Price,
 		PriceAfterDiscount: input.PriceAfterDiscount,
-		Stock:              input.StockPromotion,
+		Stock:              int(input.StockPromotion),
 		TotalSold:          0,
 		CreatedAt:          time.Now(),
 		UpdatedAt:          time.Now(),
@@ -95,4 +96,10 @@ func (s *service) CreatePromotion(product Product, input CreateProductRequest) P
 func (s *service) UpdatePromotion(promotion ProductPromotion) ProductPromotion {
 	promotion = s.repository.UpdatePromotion(promotion)
 	return promotion
+}
+
+func (s *service) Delete(product Product) {
+	s.repository.Delete(product)
+
+	return
 }

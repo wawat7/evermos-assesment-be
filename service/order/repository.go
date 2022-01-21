@@ -14,6 +14,7 @@ type Repository interface {
 	FindByProductId(productId int) (orders []Order)
 	CreateOrderProduct(product OrderProduct) OrderProduct
 	CreateOrderHistory(history OrderHistory) OrderHistory
+	Delete(order Order)
 }
 
 type repository struct {
@@ -73,4 +74,11 @@ func (repo *repository) CreateOrderHistory(history OrderHistory) OrderHistory {
 	helper.PanicIfError(err)
 
 	return history
+}
+
+func (repo *repository) Delete(order Order) {
+	err := repo.db.Delete(&order).Error
+	helper.PanicIfError(err)
+
+	return
 }

@@ -11,7 +11,7 @@ type Product struct {
 	Description string `gorm:"type:text;not null"`
 	Ingredient  string `gorm:"type:text;not null"`
 	Price       uint
-	Stock       uint
+	Stock       int
 	Rate        float32
 	Image       string `gorm:"size:255;not null"`
 	TotalSold   uint
@@ -29,7 +29,7 @@ type ProductPromotion struct {
 	IsActive           bool
 	Price              uint
 	PriceAfterDiscount uint
-	Stock              uint
+	Stock              int
 	TotalSold          uint
 	CreatedAt          time.Time
 	UpdatedAt          time.Time

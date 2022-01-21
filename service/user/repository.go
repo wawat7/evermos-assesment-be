@@ -9,6 +9,7 @@ type Repository interface {
 	Create(user User) User
 	FindAll() (users []User)
 	FindById(Id int) (user User)
+	Delete(user User)
 }
 
 type repository struct {
@@ -35,6 +36,13 @@ func (r *repository) FindAll() (users []User) {
 
 func (r *repository) FindById(Id int) (user User) {
 	err := r.db.Where("id = ?", Id).Find(&user).Error
+	helper.PanicIfError(err)
+
+	return
+}
+
+func (r *repository) Delete(user User) {
+	err := r.db.Delete(&user).Error
 	helper.PanicIfError(err)
 
 	return

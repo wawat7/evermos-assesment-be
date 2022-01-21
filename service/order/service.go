@@ -21,6 +21,7 @@ type Service interface {
 	CreateOrderHistory(order Order, userData user.User) OrderHistory
 	UpdateStockAndTotalSoldProduct(product product.Product, quantity int)
 	ValidationStockProduct(productData product.Product, quantity int) bool
+	Delete(order Order)
 }
 
 type service struct {
@@ -153,24 +154,18 @@ func (s *service) ValidationStockProduct(productData product.Product, quantity i
 
 }
 
+func (s *service) Delete(order Order) {
+	s.repository.Delete(order)
+
+	return
+}
+
 func DecreaseStockProduct(product product.Product, quantity int) product.Product {
 
 	if product.Promotion.Id != 0 {
-		stockPromo := int(product.Promotion.Stock)
-		stockPromo -= quantity
-		if stockPromo < 0 {
-			product.Promotion.Stock -= uint(quantity)
-		} else {
-			helper.PanicIfError(errors.New("out of stock"))
-		}
+		product.Promotion.Stock -= quantity
 	} else {
-		stock := int(product.Stock)
-		stock -= quantity
-		if stock < 0 {
-			product.Stock -= uint(quantity)
-		} else {
-			helper.PanicIfError(errors.New("out of stock"))
-		}
+		product.Stock -= quantity
 	}
 
 	return product
