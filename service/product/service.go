@@ -10,6 +10,10 @@ type Service interface {
 	Save(input CreateProductRequest) Product
 	FindAll() (products []Product)
 	FindById(Id int) (product Product, err error)
+	Update(product Product) Product
+	GetPriceProduct(product Product) uint
+	CreatePromotion(product Product, input CreateProductRequest) ProductPromotion
+	UpdatePromotion(promotion ProductPromotion) ProductPromotion
 }
 
 type service struct {
@@ -29,6 +33,7 @@ func (s *service) Save(input CreateProductRequest) Product {
 		Ingredient:  ingredients,
 		Price:       input.Price,
 		Stock:       input.Stock,
+		TotalSold:   0,
 		Rate:        0,
 		Image:       input.Image,
 		IsActive:    true,
@@ -39,23 +44,8 @@ func (s *service) Save(input CreateProductRequest) Product {
 	product = s.repository.Create(product)
 
 	if input.Type != TYPE_NORMAL {
-		promotion := ProductPromotion{
-			ProductId:          product.Id,
-			Type:               input.Type,
-			IsActive:           true,
-			Price:              product.Price,
-			PriceAfterDiscount: input.PriceAfterDiscount,
-			Stock:              input.StockPromotion,
-			TotalSold:          0,
-			CreatedAt:          time.Now(),
-			UpdatedAt:          time.Now(),
-		}
-
-		promotion = s.repository.CreatePromotion(promotion)
-
+		_ = s.CreatePromotion(product, input)
 	}
-
-	product = s.repository.FindById(product.Id)
 	return product
 }
 
@@ -70,4 +60,39 @@ func (s *service) FindById(Id int) (product Product, err error) {
 		return product, errors.New("product not found")
 	}
 	return
+}
+
+func (s *service) GetPriceProduct(product Product) uint {
+	price := product.Price
+	if product.Promotion.Id != 0 {
+		price = product.Promotion.PriceAfterDiscount
+	}
+	return price
+}
+
+func (s *service) Update(product Product) Product {
+	product = s.repository.Update(product)
+	return product
+}
+
+func (s *service) CreatePromotion(product Product, input CreateProductRequest) ProductPromotion {
+	promotion := ProductPromotion{
+		ProductId:          product.Id,
+		Type:               input.Type,
+		IsActive:           true,
+		Price:              product.Price,
+		PriceAfterDiscount: input.PriceAfterDiscount,
+		Stock:              input.StockPromotion,
+		TotalSold:          0,
+		CreatedAt:          time.Now(),
+		UpdatedAt:          time.Now(),
+	}
+
+	promotion = s.repository.CreatePromotion(promotion)
+	return promotion
+}
+
+func (s *service) UpdatePromotion(promotion ProductPromotion) ProductPromotion {
+	promotion = s.repository.UpdatePromotion(promotion)
+	return promotion
 }

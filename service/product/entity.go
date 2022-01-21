@@ -14,6 +14,7 @@ type Product struct {
 	Stock       uint
 	Rate        float32
 	Image       string `gorm:"size:255;not null"`
+	TotalSold   uint
 	IsActive    bool
 	CreatedAt   time.Time
 	UpdatedAt   time.Time

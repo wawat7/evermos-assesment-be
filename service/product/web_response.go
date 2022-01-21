@@ -32,7 +32,7 @@ func ProductFormat(product Product) FormatProduct {
 	productPrice := product.Price
 	ProductOriginalPrice := product.Price
 	productStock := product.Stock
-	productTotalSold := uint(0)
+	productTotalSold := product.TotalSold
 
 	if product.Promotion.Id != 0 {
 		productType = product.Promotion.Type
